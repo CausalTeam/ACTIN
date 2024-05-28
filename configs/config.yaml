@@ -1,0 +1,23 @@
+# Model specific parameters
+model:
+  name: recursive_balancing_representation_tcn
+  first_net: tcn
+  second_net: tcn
+
+# Dataset for training / evaluation -- specific values should be filled for each dataset
+dataset:
+
+# Experiment specific parameters
+exp:
+
+# Hydra defaults
+defaults:
+  - _self_
+  - override hydra/hydra_logging: colorlog
+  - override hydra/job_logging: colorlog
+
+hydra:
+  run:
+    dir: ${exp.log_dir}/
+  sweep:
+    dir: .

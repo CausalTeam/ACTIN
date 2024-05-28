@@ -1,0 +1,53 @@
+# @package _global_
+model:
+  # name: ${model.subname}_br_${model.first_net}_${model.second_net}_recursive=${model.recursive}
+  name: ACTIN_lstm
+  subname: gan
+  _target_: src.models.causal_gan_br_model.CausalGanBrModel
+  transpose: True
+  transpose_size: 64
+  first_net: lstm
+  second_net: lstm
+  recursive: True
+  hidden_size: 16
+  num_layers: 2
+  br_size: 32
+  br_act: True
+  hidden_size_y: 16
+  num_layers_y: 1
+  hidden_size_x: 16
+  num_layers_x: 1
+  hiddens_G_y: 
+    - 16
+  hiddens_G_x:
+    - 16
+  hiddens_D_net:
+    - 16
+  seperate_x_network: True
+  num_blocks: 2
+  ema_y: True
+  balancing: mine-shuffle
+  init: 0.001
+  shffule_mode: all
+
+exp:
+  seed: 10
+  batch_size: 128
+  dropout: 0.1
+  sch_patience: 500
+  sch_patience_D: 500
+  cooldown: 10
+  patience: 500
+  factor: 0.5
+  epochs: 500
+  lr: 1.e-3
+  lr_D: 1.e-4
+  weight_decay: 1.e-4
+  weight_decay_D: 0
+  update_lambda_D: True
+  lambda_D: 0.01
+  lambda_X: 0.1
+  lambda_Y: 1
+  loss_type_X: l2
+  load_best: True
+  val: True

@@ -1,0 +1,41 @@
+# @package _global_
+model:
+  balancing: mine-shuffle
+  br_act: true
+  br_size: 32
+  ema_y: true
+  hiddens_D_net:
+  - 16
+  hiddens_G_x:
+  - 16
+  hiddens_G_y:
+  - 32
+  init: 0.001
+  num_channels_hidden:
+  - 20
+  - 20
+  num_channels_hidden_x:
+  - 20
+  - 20
+  - 20
+  num_channels_hidden_y:
+  - 20
+  - 20
+  - 20
+  recursive: true
+  transpose: true
+  transpose_size: 64
+
+exp:
+  batch_size: 64
+  beta: 0.999
+  dropout: 0.1
+  epochs: 500
+  lambda_D: 0.01
+  lambda_X: 0.05
+  lr: 0.01
+  lr_D: 0.0002
+  patience: 500
+  update_lambda_D: true
+  weight_decay: 5.0e-05
+  weight_decay_D: 0

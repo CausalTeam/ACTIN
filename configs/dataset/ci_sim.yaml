@@ -1,0 +1,38 @@
+# @package _global_
+dataset:
+  _target_: src.data.SyntheticCIDatasetCollection   # Will be dynamically instantiated
+  name: continuous_intervention_generator
+  noise_scale_y: 0.1
+  noise_scale_x: 0.2
+  noise_scale_a: 0.1
+  gamma: 1
+  mode_x: 'v3'
+  mode_a: 'v2'
+  theta_x_sum: 0.2
+  seed: ${exp.seed}
+  data_size:
+    train: 5000
+    val: 500
+    test: 500
+  static_size: 1
+  lag: 3                                                # Lag for treatment assignment window
+  max_seq_length: 23                                    # Max length of time series
+  projection_horizon: 5                                 # Range of tau-step-ahead prediction (tau = projection_horizon + 1)
+  cf_seq_mode: sliding_treatment                        # sliding_treatment / random_trajectories
+  val_batch_size: 512                                   # Batch size for evaluation     
+  predict_X: True
+  autoregressive: True 
+  treatment_size: 1
+  one_hot_treatment_size: 2
+  input_size: 6
+  output_size: 1
+  treatment_mode: continuous
+
+exp:
+  log_dir: my_outputs/ci_sim/${model.name}/${exp.mode}/${exp.current_date}/${exp.current_time}
+  device: cuda
+  mode: train
+  logging: False
+  gpu_resources: 0.5
+  cpu_resources: 4
+  csv_dir: csvs/ci_sim

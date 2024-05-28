@@ -1,0 +1,51 @@
+# @package _global_
+dataset:
+  _target_: src.data.SyntheticCancerDatasetCollection   # Will be dynamically instantiated
+  name: tumor_generator
+  coeff: 4                                              # Confounding coefficient (gamma)
+  chemo_coeff: ${dataset.coeff}                         # Confounding coefficient of chemotherapy
+  radio_coeff: ${dataset.coeff}                         # Confounding coefficient of radiotherapy
+  seed: ${exp.seed}
+  num_patients:
+    train: 10000
+    val: 1000
+    test: 1000
+  window_size: 15                                       # Used for biased treatment assignment
+  lag: 0                                                # Lag for treatment assignment window
+  max_seq_length: 60                                    # Max length of time series
+  projection_horizon: 5                                 # Range of tau-step-ahead prediction (tau = projection_horizon + 1)
+  cf_seq_mode: random_trajectories                        # sliding_treatment / random_trajectories
+  # val_batch_size: 512                                   # Batch size for evaluation
+  val_batch_size: 4096                                  # Batch size for evaluation
+  treatment_mode: multiclass                            # multiclass / multilabel -- for RMSN
+  static_size: 1                                        # Number of static features
+  treatment_size: 4
+  one_hot_treatment_size: 4
+  input_size: 0
+  output_size: 1
+  predict_X: False
+  autoregressive: True
+
+model:
+  dim_treatments: 4
+  dim_vitals: 0
+  dim_static_features: 1
+  dim_outcomes: 1
+
+exp:
+  unscale_rmse: True
+  percentage_rmse: True
+  processed_data_dir: data/processed/cancer_sim_random/${dataset.coeff}
+  log_dir: my_outputs/cancer_sim_random/coeff_${dataset.coeff}/${model.name}/${exp.mode}/${exp.current_date}/${exp.current_time}
+  device: cuda
+  gpus: 1
+  weights_ema: True
+  beta: 0.99
+  clear_tf: True
+  logging: False
+  current_date: ${now:%Y-%m-%d}
+  current_time: ${now:%H-%M-%S}
+  mode: train
+  gpu_resources: 0.5
+  cpu_resources: 4
+  csv_dir: csvs/cancer_random/gamma_${dataset.coeff}

@@ -1,0 +1,17 @@
+# @package _global_
+dataset:
+  coeff: 0
+
+model:
+  br_act: true
+  init: 0.001
+  recursive: true
+
+exp:
+  batch_size: 128
+  epochs: 150
+  lambda_D: 0.01
+  lr: 0.002
+  update_lambda_D: true
+  weight_decay: 1.0e-05
+  weight_decay_D: 0
